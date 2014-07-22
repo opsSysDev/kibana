@@ -61,6 +61,7 @@ function (Settings) {
      * dashboard, but this list is used in the "add panel" interface.
      */
     panel_names: [
+      'entry',
       'histogram',
       'map',
       'goal',
