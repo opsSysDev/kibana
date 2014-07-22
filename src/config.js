@@ -62,6 +62,7 @@ function (Settings) {
      */
     panel_names: [
       'entry',
+      'statisticstrend',
       'percentiles',
       'histogram',
       'map',
