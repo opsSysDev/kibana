@@ -70,6 +70,11 @@
       <form class="input-prepend nomargin">
         <button class="btn" ng-click="elasticsearch_save('dashboard')"><i class="icon-save"></i></button>
         <input class='input-medium' ng-model="dashboard.current.title" type="text" ng-model="elasticsearch.title"/>
+        <!--added by ctrip-->
+        <br/>
+        <button style="margin-top:-1px" class="btn"><i class="icon-link"></i></button>
+        <select class='input-medium' ng-model="dashboard.current.mainclass" ng-model="dashboard.mainclass" ng-options="mainclass for mainclass in ['4xx-5xx','IIS','MOBILE','OPS','IT','Cloud','CC','Other']"></select>
+        <select ng-hide="dashboard.current.mainclass != 'IIS' && dashboard.current.mainclass != 'MOBILE' && dashboard.current.mainclass != 'OPS'" class='input-medium' ng-model="dashboard.current.subclass" ng-model="dashboard.subclass" ng-options='subclass for subclass in ["途风", "营销&高端", "主题游", "团队游", "火车票", "技术管理&安全中心", "用户研究&设计中心", "地面业务", "攻略社区", "商业智能部", "商旅", "无线", "机票", "框架", "系统", "软件架构部", "酒店", "网站运营中心", "公共服务", "国际业务", "搜索产品", "套餐","邮轮","用车","高端旅游","Trace","Client"]'></select>
       </form>
     </li>
 

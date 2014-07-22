@@ -399,7 +399,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
       });
     };
 
-    this.elasticsearch_save = function(type,title,ttl) {
+    this.elasticsearch_save = function(type,title,ttl,mainclass,subclass) {
       // Clone object so we can modify it without influencing the existing obejct
       var save = _.clone(self.current);
       var id;
@@ -409,13 +409,26 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         id = save.title = _.isUndefined(title) ? self.current.title : title;
       }
 
-      // Create request with id as title. Rethink this.
-      var request = ejs.Document(config.kibana_index,type,id).source({
-        user: 'guest',
-        group: 'guest',
-        title: save.title,
-        dashboard: angular.toJson(save)
-      });
+      //ctrip
+      if(subclass!=''){
+          var request = ejs.Document(config.kibana_index,type,id).source({
+            user: 'guest',
+            group: 'guest',
+            title: save.title,
+            mainclass: mainclass,
+            subclass: subclass,
+            dashboard: angular.toJson(save)
+          }); 
+      }else{ 
+          var request = ejs.Document(config.kibana_index,type,id).source({
+            user: 'guest',
+            group: 'guest',
+            title: save.title,
+            mainclass: mainclass,
+            dashboard: angular.toJson(save)
+          });
+      } 
+
 
       request = type === 'temp' && ttl ? request.ttl(ttl) : request;
 
