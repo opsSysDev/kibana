@@ -1,12 +1,7 @@
-/** @scratch /panels/5
- * include::panels/terms.asciidoc[]
- */
-
-/** @scratch /panels/terms/0
- * == terms
+/**  * == terms
  * Status: *Stable*
  *
- * A table, bar chart or pie chart based on the results of an Elasticsearch terms facet.
+ * get all dashboards and show them in the panel
  *
  */
 define([
@@ -40,78 +35,6 @@ function (angular, app, _, $, kbn, config) {
       status  : "Stable",
       description : "Displays All dashboard"};
 
-    // Set and populate defaults
-    var _d = {
-      /** @scratch /panels/terms/5
-       * === Parameters
-       *
-       * field:: The field on which to computer the facet
-       */
-      field   : '_type',
-      /** @scratch /panels/terms/5
-       * exclude:: terms to exclude from the results
-       */
-      exclude : [],
-      /** @scratch /panels/terms/5
-       * missing:: Set to false to disable the display of a counter showing how much results are
-       * missing the field
-       */
-      missing : true,
-      /** @scratch /panels/terms/5
-       * other:: Set to false to disable the display of a counter representing the aggregate of all
-       * values outside of the scope of your +size+ property
-       */
-      other   : true,
-      /** @scratch /panels/terms/5
-       * size:: Show this many terms
-       */
-      size    : 10,
-      /** @scratch /panels/terms/5
-       * order:: count, term, reverse_count or reverse_term
-       */
-      order   : 'count',
-      style   : { "font-size": '10pt'},
-      /** @scratch /panels/terms/5
-       * donut:: In pie chart mode, draw a hole in the middle of the pie to make a tasty donut.
-       */
-      donut   : false,
-      /** @scratch /panels/terms/5
-       * tilt:: In pie chart mode, tilt the chart back to appear as more of an oval shape
-       */
-      tilt    : false,
-      /** @scratch /panels/terms/5
-       * lables:: In pie chart mode, draw labels in the pie slices
-       */
-      labels  : true,
-      /** @scratch /panels/terms/5
-       * arrangement:: In bar or pie mode, arrangement of the legend. horizontal or vertical
-       */
-      arrangement : 'horizontal',
-      /** @scratch /panels/terms/5
-       * chart:: table, bar or pie
-       */
-      chart       : 'bar',
-      /** @scratch /panels/terms/5
-       * counter_pos:: The location of the legend in respect to the chart, above or below.
-       */
-      counter_pos : 'above',
-      /** @scratch /panels/terms/5
-       * spyable:: Set spyable to false to disable the inspect button
-       */
-      spyable     : true,
-      /** @scratch /panels/terms/5
-       * ==== Queries
-       * queries object:: This object describes the queries to use on this panel.
-       * queries.mode::: Of the queries available, which to use. Options: +all, pinned, unpinned, selected+
-       * queries.ids::: In +selected+ mode, which query ids are selected.
-       */
-      queries     : {
-        mode        : 'all',
-        ids         : []
-      },
-    };
-    _.defaults($scope.panel,_d);
-
     $scope.init = function () {
       $scope.hits = 0;
 
@@ -127,6 +50,14 @@ function (angular, app, _, $, kbn, config) {
         request.size(1000).doSearch(
           // Success
           function(result) {
+            var dashboardmainclass = [];
+            var dashboardclass = {};
+            for (var i in config.dashboard_class){
+                for(var k in config.dashboard_class[i])
+                    dashboardmainclass.push(k);
+                    dashboardclass[k] = config.dashboard_class[i][k];
+            }
+
             var entries = {}
             for (var i in result['hits']['hits']){
                 var _source = result['hits']['hits'][i]['_source'];
@@ -135,9 +66,14 @@ function (angular, app, _, $, kbn, config) {
                 if ('mainclass' in _source){
                     mainclass = _source['mainclass'];
                 }
-                var subclass = 'IIS' == mainclass || 'MOBILE' == mainclass ? '其它' : '';
                 if ('subclass' in _source){
-                    subclass = _source['subclass'];
+                    var subclass = _source['subclass'];
+                }else{
+                    if (mainclass in dashboardclass && dashboardclass[mainclass].length > 0){
+                        var subclass='其它';
+                    }else{
+                        var subclass='';
+                    }
                 }
 
                 if (mainclass in entries){
@@ -170,53 +106,67 @@ function (angular, app, _, $, kbn, config) {
                     One['data'].push({title:subclass,data:entries[mainclass][subclass]});
                 }
 
+                if (mainclass in dashboardclass && dashboardclass[mainclass].length>0){
+                    One['data'].sort(function(x,y){
+                        var sortedTitles = dashboardclass[mainclass];
+
+                        if (sortedTitles.indexOf(x['title']) == -1){
+                            return 1;
+                        }
+                        if (sortedTitles.indexOf(y['title']) == -1){
+                            return -1;
+                        }
+                        return sortedTitles.indexOf(x['title']) - sortedTitles.indexOf(y['title']);
+                    });
+                }
+
                 //sort IIS on subclass
-                if ('IIS' == mainclass){
-                    One['data'].sort(function(x,y){
-                        var sortedTitles = ['公共服务','酒店','机票','火车票','攻略社区','无线','其它'];
+                //if ('IIS' == mainclass){
+                    //One['data'].sort(function(x,y){
+                        //var sortedTitles = ['公共服务','酒店','机票','火车票','攻略社区','无线','其它'];
 
-                        if (sortedTitles.indexOf(x['title']) == -1){
-                            return 1;
-                        }
-                        if (sortedTitles.indexOf(y['title']) == -1){
-                            return -1;
-                        }
-                        return sortedTitles.indexOf(x['title']) - sortedTitles.indexOf(y['title']);
-                    });
-                }
+                        //if (sortedTitles.indexOf(x['title']) == -1){
+                            //return 1;
+                        //}
+                        //if (sortedTitles.indexOf(y['title']) == -1){
+                            //return -1;
+                        //}
+                        //return sortedTitles.indexOf(x['title']) - sortedTitles.indexOf(y['title']);
+                    //});
+                //}
 
-                else if ('MOBILE' == mainclass){
-                    One['data'].sort(function(x,y){
-                        var sortedTitles = ['Trace','Client','RestFul'];
+                //else if ('MOBILE' == mainclass){
+                    //One['data'].sort(function(x,y){
+                        //var sortedTitles = ['Trace','Client','RestFul'];
 
-                        if (sortedTitles.indexOf(x['title']) == -1){
-                            return 1;
-                        }
-                        if (sortedTitles.indexOf(y['title']) == -1){
-                            return -1;
-                        }
-                        return sortedTitles.indexOf(x['title']) - sortedTitles.indexOf(y['title']);
-                    });
-                }
+                        //if (sortedTitles.indexOf(x['title']) == -1){
+                            //return 1;
+                        //}
+                        //if (sortedTitles.indexOf(y['title']) == -1){
+                            //return -1;
+                        //}
+                        //return sortedTitles.indexOf(x['title']) - sortedTitles.indexOf(y['title']);
+                    //});
+                //}
 
                 entriesList.push(One);
             }
 
             //sort on MainClass
             entriesList.sort(function(x,y){
-                var sortedTitles = ['4xx-5xx','IIS','MOBILE','Cloud','OPS'];
 
-                if (sortedTitles.indexOf(x['title']) == -1){
+                if (dashboardmainclass.indexOf(x['title']) == -1){
                     return 1;
                 }
-                if (sortedTitles.indexOf(y['title']) == -1){
+                if (dashboardmainclass.indexOf(y['title']) == -1){
                     return -1;
                 }
-                return sortedTitles.indexOf(x['title']) - sortedTitles.indexOf(y['title']);
+                return dashboardmainclass.indexOf(x['title']) - dashboardmainclass.indexOf(y['title']);
             });
 
 
             $scope.entriesList = entriesList;
+            console.log(entriesList);
             return result;
           },
           // Failure
