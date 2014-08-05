@@ -1,9 +1,10 @@
 define([
   'angular',
   'app',
-  'lodash'
+  'lodash',
+  'config'
 ],
-function (angular, app, _) {
+function (angular, app, _, config) {
   'use strict';
 
   var module = angular.module('kibana.controllers');
@@ -24,6 +25,14 @@ function (angular, app, _) {
         // This might create name spacing issues.
         $scope.panel = $scope.pulldown;
         $scope.row = $scope.pulldown;
+
+        $scope.dashboardclass = {};
+        $scope.dashboardmainclass = [];
+        for (var i in config.dashboard_class){
+            for(var k in config.dashboard_class[i])
+                $scope.dashboardmainclass.push(k);
+                $scope.dashboardclass[k] = config.dashboard_class[i][k];
+        }
       };
 
       $scope.toggle_pulldown = function(pulldown) {

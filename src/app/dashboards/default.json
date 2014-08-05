@@ -1,90 +1,185 @@
 {
-  "title": "Introduction",
-  "services": {
-    "query": {
-      "list": {
-        "0": {
-          "query": "*",
-          "alias": "",
-          "color": "#7EB26D",
-          "id": 0,
-          "pin": false,
-          "type": "lucene"
-        }
-      },
-      "ids": [
-        0
-      ]
-    },
-    "filter": {
-      "list": {},
-      "ids": []
-    }
-  },
-  "rows": [
-    {
-      "title": "Intro",
-      "height": "700px",
-      "editable": false,
-      "collapse": false,
-      "collapsable": false,
-      "panels": [
-        {
-          "error": false,
-          "span": 4,
-          "editable": false,
-          "group": [
-            "default"
-          ],
-          "type": "text",
-          "mode": "markdown",
-          "content": "![kibana](img/kibana.png)  \n\n##### Did you just upgrade? Not expecting this screen?\nIf you were using the old default page you might not be expecting this screen. I understand, change can be awkward. Let me explain. \n\n##### Setting a global default dashboard\nKibana has always shipped with an interface for Logstash, still does! You can access it [here](index.html#dashboard/file/logstash.json). However, if you want to make it your default again, all you need to do is rename a file!\nIn your Kibana installation directory: \n\nRename *logstash.json* to *default.json* and refresh. Should be all set.\n\n##### But wait, there's more!\nIn fact, you can add any exported dashboard to that directory and access it as *http://YOUR-HOST -HERE/index.html#dashboard/file/YOUR-DASHBOARD.json*. Neat trick eh?",
-          "style": {},
-          "title": "",
-          "status": "Stable"
+    "title": "Introduction",
+    "services": {
+        "query": {
+            "list": {
+                "0": {
+                    "query": "type:kibana",
+                    "alias": "",
+                    "color": "#7EB26D",
+                    "id": 0,
+                    "pin": false,
+                    "type": "lucene",
+                    "enable": true
+                },
+                "1": {
+                    "id": 1,
+                    "color": "#EAB839",
+                    "alias": "",
+                    "pin": false,
+                    "type": "lucene",
+                    "enable": true,
+                    "query": "type:api"
+                }
+            },
+            "ids": [
+                0,
+                1
+            ]
         },
-        {
-          "error": false,
-          "span": 8,
-          "editable": false,
-          "group": [
-            "default"
-          ],
-          "type": "text",
-          "mode": "markdown",
-          "content": "### Welcome to Kibana. \nGlad you could make it. Happy to have you here! Lets get started, shall we?\n##### Requirements\n* **A good browser.**  \n    The latest version of Chrome or Firefox is recommended. Safari (latest version) and Internet Explorer 9 and above are also supported.\n* **A webserver.**  \n    Just somewhere to host the HTML and Javascript. Basically any webserver will work.\n* **Elasticsearch**  \n   0.90.9 or above. \n\n##### Configuration\nIf Kibana and Elasticsearch are on the same host, and you're using the default Elasticsearch port, then you're all set. Kibana is configured to use that setup by default!  \n\nIf not, you need to edit *config.js* and set the *elasticsearch* parameter with the URL (including port, probably 9200) of your Elasticsearch server. The host part should be the entire, fully qualified domain name, or IP, **not localhost**.\n#### Are you a Logstash User?\n+ **YES** - Great! We have a prebuilt dashboard: [(Logstash Dashboard)](index.html#/dashboard/file/logstash.json). See the note to the right about making it your global default  \n\n+ **NO** - Hey, no problem, you just have a bit of setup to do. You have a few choices:  \n\n    1. [Sample Dashboard](index.html#/dashboard/file/guided.json) *I don't have much data yet, please extract some basics for me*  \n    2. [Unconfigured Dashboard](index.html#/dashboard/file/noted.json) *I have a lot of data and I don't want Kibana to query it at once*\n    3. [Blank Dashboard](index.html#/dashboard/file/blank.json) *I'm comfortable figuring it out on my own*",
-          "style": {},
-          "status": "Stable"
+        "filter": {
+            "list": {
+                "0": {
+                    "type": "time",
+                    "field": "@timestamp",
+                    "from": "now-2d",
+                    "to": "now",
+                    "mandate": "must",
+                    "active": true,
+                    "alias": "",
+                    "id": 0
+                }
+            },
+            "ids": [
+                0
+            ]
         }
-      ],
-      "notice": false
+    },
+    "rows": [
+        {
+        "title": "Intro",
+        "height": "100px",
+        "editable": false,
+        "collapse": false,
+        "collapsable": false,
+        "panels": [
+            {
+            "error": false,
+            "span": 12,
+            "editable": false,
+            "group": [
+                "default"
+            ],
+            "title": "All Dashboard",
+            "type": "entry",
+            "style": {},
+            "status": "Stable"
+        }
+        ],
+        "notice": false
+    },
+    {
+        "title": "Graph",
+        "height": "350px",
+        "editable": false,
+        "collapse": false,
+        "collapsable": true,
+        "panels": [
+            {
+            "span": 12,
+            "editable": false,
+            "group": [
+                "default"
+            ],
+            "type": "histogram",
+            "mode": "count",
+            "time_field": "@timestamp",
+            "value_field": null,
+            "auto_int": false,
+            "resolution": 100,
+            "interval": "1m",
+            "fill": 3,
+            "linewidth": 3,
+            "timezone": "browser",
+            "spyable": true,
+            "zoomlinks": false,
+            "bars": false,
+            "stack": false,
+            "points": false,
+            "lines": true,
+            "legend": true,
+            "x-axis": true,
+            "y-axis": true,
+            "percentage": false,
+            "interactive": false,
+            "queries": {
+                "mode": "selected",
+                "ids": [
+                  0
+                ]
+            },
+            "title": "ES使用率(PV)",
+            "intervals": [
+                "auto",
+                "1s",
+                "1m",
+                "5m",
+                "10m",
+                "30m",
+                "1h",
+                "3h",
+                "12h",
+                "1d",
+                "1w",
+                "1M",
+                "1y"
+            ],
+            "options": false,
+            "tooltip": {
+                "value_type": "cumulative",
+                "query_as_alias": true
+            },
+            "scale": 0.1,
+            "y_format": "none",
+            "grid": {
+                "max": null,
+                "min": 0
+            },
+            "annotate": {
+                "enable": false,
+                "query": "*",
+                "size": 20,
+                "field": "_type",
+                "sort": [
+                    "_score",
+                    "desc"
+                ]
+            },
+            "pointradius": 5,
+            "show_query": false,
+            "legend_counts": true,
+            "zerofill": true,
+            "derivative": false
+        }
+        ],
+        "notice": false
     }
-  ],
-  "editable": false,
-  "index": {
-    "interval": "none",
-    "pattern": "[logstash-]YYYY.MM.DD",
-    "default": "_all",
-    "warm_fields": false
-  },
-  "style": "dark",
-  "failover": false,
-  "panel_hints": true,
-  "pulldowns": [],
-  "nav": [],
-  "loader": {
-    "save_gist": false,
-    "save_elasticsearch": true,
-    "save_local": true,
-    "save_default": true,
-    "save_temp": true,
-    "save_temp_ttl_enable": true,
-    "save_temp_ttl": "30d",
-    "load_gist": true,
-    "load_elasticsearch": true,
-    "load_elasticsearch_size": 20,
-    "load_local": true,
-    "hide": false
-  },
-  "refresh": false
+    ],
+    "editable": false,
+    "index": {
+        "interval": "day",
+        "pattern": "[esvisit-]YYYY.MM.DD",
+        "default": "NO_TIME_FILTER_OR_INDEX_PATTERN_NOT_MATCHED",
+        "warm_fields": true
+    },
+    "style": "dark",
+    "failover": false,
+    "panel_hints": true,
+    "pulldowns": [],
+    "nav": [],
+    "loader": {
+        "save_gist": false,
+        "save_elasticsearch": false,
+        "save_local": false,
+        "save_default": false,
+        "save_temp": false,
+        "save_temp_ttl_enable": false,
+        "save_temp_ttl": "30d",
+        "load_gist": false,
+        "load_elasticsearch": true,
+        "load_elasticsearch_size": 20,
+        "load_local": false,
+        "hide": true
+    },
+    "refresh": false
 }
