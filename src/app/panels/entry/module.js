@@ -119,36 +119,6 @@ function (angular, app, _, $, kbn, config) {
                         return sortedTitles.indexOf(x['title']) - sortedTitles.indexOf(y['title']);
                     });
                 }
-
-                //sort IIS on subclass
-                //if ('IIS' == mainclass){
-                    //One['data'].sort(function(x,y){
-                        //var sortedTitles = ['公共服务','酒店','机票','火车票','攻略社区','无线','其它'];
-
-                        //if (sortedTitles.indexOf(x['title']) == -1){
-                            //return 1;
-                        //}
-                        //if (sortedTitles.indexOf(y['title']) == -1){
-                            //return -1;
-                        //}
-                        //return sortedTitles.indexOf(x['title']) - sortedTitles.indexOf(y['title']);
-                    //});
-                //}
-
-                //else if ('MOBILE' == mainclass){
-                    //One['data'].sort(function(x,y){
-                        //var sortedTitles = ['Trace','Client','RestFul'];
-
-                        //if (sortedTitles.indexOf(x['title']) == -1){
-                            //return 1;
-                        //}
-                        //if (sortedTitles.indexOf(y['title']) == -1){
-                            //return -1;
-                        //}
-                        //return sortedTitles.indexOf(x['title']) - sortedTitles.indexOf(y['title']);
-                    //});
-                //}
-
                 entriesList.push(One);
             }
 
@@ -166,7 +136,7 @@ function (angular, app, _, $, kbn, config) {
 
 
             $scope.entriesList = entriesList;
-            console.log(entriesList);
+
             return result;
           },
           // Failure
