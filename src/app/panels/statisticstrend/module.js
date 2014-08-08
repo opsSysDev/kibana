@@ -358,7 +358,7 @@ function (angular, app, _, $, kbn) {
 
   });
 
-  module.directive('termsChart', function(querySrv) {
+  module.directive('statisticstrendChart', function(querySrv) {
     return {
       restrict: 'A',
       link: function(scope, elem) {
