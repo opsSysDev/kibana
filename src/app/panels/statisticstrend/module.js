@@ -32,7 +32,7 @@ function (angular, app, _, $, kbn) {
         {title:'Queries', src:'app/partials/querySelect.html'}
       ],
       status  : "Dev",
-      description : "不一定准确,取决于trysize"
+      description : "不一定准确,取决于trysize.例如取domain的流量对比:共2000个domain,这里trysize大于等于2000才是准确的. 但是domain太多,资源使用过多, 不建议使用此panel."
     };
 
     // Set and populate defaults
