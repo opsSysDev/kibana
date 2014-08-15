@@ -1,15 +1,14 @@
 define([
   'angular',
-  'app',
+  'config',
   'lodash',
-  'config'
 ],
-function (angular, app, _, config) {
+function (angular, _, config) {
   'use strict';
 
   var module = angular.module('kibana.controllers');
 
-  module.controller('DashboardClassCtrl', function($scope, $rootScope, $timeout,ejsResource, querySrv) {
+  module.controller('DashboardClassCtrl', function($scope) {
 
       $scope.init = function() {
         $scope.dashboardclass = {};
