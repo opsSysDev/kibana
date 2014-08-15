@@ -1,10 +1,9 @@
 define([
   'angular',
   'app',
-  'lodash',
-  'config'
+  'lodash'
 ],
-function (angular, app, _, config) {
+function (angular, app, _) {
   'use strict';
 
   var module = angular.module('kibana.controllers');
@@ -26,13 +25,6 @@ function (angular, app, _, config) {
         $scope.panel = $scope.pulldown;
         $scope.row = $scope.pulldown;
 
-        $scope.dashboardclass = {};
-        $scope.dashboardmainclass = [];
-        for (var i in config.dashboard_class){
-            for(var k in config.dashboard_class[i])
-                $scope.dashboardmainclass.push(k);
-                $scope.dashboardclass[k] = config.dashboard_class[i][k];
-        }
       };
 
       $scope.toggle_pulldown = function(pulldown) {

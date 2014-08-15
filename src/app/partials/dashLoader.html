@@ -65,7 +65,7 @@
 
   <ul class="dropdown-menu" style="padding:10px">
 
-    <li ng-controller="PulldownCtrl" ng-show="dashboard.current.loader.save_elasticsearch != false">
+    <li ng-controller="DashboardClassCtrl" ng-show="dashboard.current.loader.save_elasticsearch != false">
       <form class="input-prepend nomargin">
         <button class="btn" ng-click="elasticsearch_save('dashboard')"><i class="icon-save"></i></button>
         <input class='input-medium' ng-model="dashboard.current.title" type="text" ng-model="elasticsearch.title"/>
