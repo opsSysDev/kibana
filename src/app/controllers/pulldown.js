@@ -24,6 +24,7 @@ function (angular, app, _) {
         // This might create name spacing issues.
         $scope.panel = $scope.pulldown;
         $scope.row = $scope.pulldown;
+
       };
 
       $scope.toggle_pulldown = function(pulldown) {

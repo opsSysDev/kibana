@@ -29,7 +29,7 @@ function (Settings) {
      *  +elasticsearch: {server: "http://localhost:9200", withCredentials: true}+
      *
      */
-    elasticsearch: "http://"+window.location.hostname+":9200",
+    elasticsearch: "http://127.0.0.1:9200",
 
     /** @scratch /configuration/config.js/5
      *
@@ -60,6 +60,9 @@ function (Settings) {
      * dashboard, but this list is used in the "add panel" interface.
      */
     panel_names: [
+      'entry',
+      'statisticstrend',
+      'percentiles',
       'histogram',
       'map',
       'goal',
@@ -75,6 +78,14 @@ function (Settings) {
       'terms',
       'stats',
       'sparklines'
-    ]
+    ],
+
+    /*  user can save dashboard with a class and subclass;
+     *  with the entry panel, admin could setup a more clear&convenient entry **/
+    dashboard_class: [
+        {'Apache':["domain1","domain2"]},
+        {'IIS':["Public","Web Service"]},
+        {'Cloud':["Openstack","Vclient"]}
+        ]
   });
 });

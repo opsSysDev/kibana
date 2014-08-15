@@ -51,11 +51,14 @@ function (angular, _) {
       }
     };
 
+    //ctrip
     $scope.elasticsearch_save = function(type,ttl) {
       dashboard.elasticsearch_save(
         type,
         ($scope.elasticsearch.title || dashboard.current.title),
-        ($scope.loader.save_temp_ttl_enable ? ttl : false)
+        ($scope.loader.save_temp_ttl_enable ? ttl : false),
+        dashboard.current.mainclass,
+        dashboard.current.subclass
       ).then(
         function(result) {
         if(!_.isUndefined(result._id)) {
