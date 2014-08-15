@@ -171,15 +171,15 @@ define([
 
       results.then(function(results) {
         $scope.panelMeta.loading = false;
-        var value = results.data.aggregations.stats['stats'][$scope.panel.mode];
+        var value = results.data.aggregations.stats['stats']['values'][$scope.panel.mode];
 
         var rows = queries.map(function (q, i) {
           var alias = q.alias || q.query;
           var obj = _.clone(q);
           obj.label = alias;
           obj.Label = alias.toLowerCase(); //sort field
-          obj.value = results.data.aggregations['stats_'+i]['stats_'+i];
-          obj.Value = results.data.aggregations['stats_'+i]['stats_'+i]; //sort field
+          obj.value = results.data.aggregations['stats_'+i]['stats_'+i]['values'];
+          obj.Value = results.data.aggregations['stats_'+i]['stats_'+i]['values']; //sort field
 
           var _V = {}
           for(var k in obj.Value){
