@@ -125,7 +125,7 @@ define([
           'filter': JSON.parse($scope.ejs.QueryFilter(
             $scope.ejs.FilteredQuery(
               boolQuery,
-              filterSrv.getBoolFilter(filterSrv.ids)
+              filterSrv.getBoolFilter(filterSrv.ids())
             )
           ).toString(), true),
           'aggs': {
@@ -154,7 +154,7 @@ define([
           'filter': JSON.parse($scope.ejs.QueryFilter(
             $scope.ejs.FilteredQuery(
               query,
-              filterSrv.getBoolFilter(filterSrv.ids)
+              filterSrv.getBoolFilter(filterSrv.ids())
             )
           ).toString(), true),
           'aggs': aggsquery
