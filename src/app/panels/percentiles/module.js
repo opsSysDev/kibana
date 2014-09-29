@@ -170,7 +170,6 @@ define([
       });
 
       results.then(function(results) {
-        //var value = results.data.aggregations.stats['stats']['values'][$scope.panel.mode];
         var value = results.data.aggregations.stats['stats'][$scope.panel.mode];
         console.log('post');
 
