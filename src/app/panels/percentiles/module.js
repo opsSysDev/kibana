@@ -170,16 +170,17 @@ define([
       });
 
       results.then(function(results) {
-        $scope.panelMeta.loading = false;
-        var value = results.data.aggregations.stats['stats']['values'][$scope.panel.mode];
+        //var value = results.data.aggregations.stats['stats']['values'][$scope.panel.mode];
+        var value = results.data.aggregations.stats['stats'][$scope.panel.mode];
+        console.log('post');
 
         var rows = queries.map(function (q, i) {
           var alias = q.alias || q.query;
           var obj = _.clone(q);
           obj.label = alias;
           obj.Label = alias.toLowerCase(); //sort field
-          obj.value = results.data.aggregations['stats_'+i]['stats_'+i]['values'];
-          obj.Value = results.data.aggregations['stats_'+i]['stats_'+i]['values']; //sort field
+          obj.value = results.data.aggregations['stats_'+i]['stats_'+i];
+          obj.Value = results.data.aggregations['stats_'+i]['stats_'+i]; //sort field
 
           var _V = {}
           for(var k in obj.Value){
@@ -198,6 +199,7 @@ define([
         };
 
         $scope.$emit('render');
+        $scope.panelMeta.loading = false;
       });
     };
 
@@ -228,7 +230,8 @@ define([
         value = numeral(value).format('0.000');
         break;
       default:
-        value = numeral(value).format('0,0');
+        if (value)
+        return value.toFixed(2);
       }
       return value;
     };
