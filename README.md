@@ -1,3 +1,11 @@
+# Danger
+I threw this together a few years ago for a work project. It may still be of use, but the more recent versions of Kibana seem to have undergone quite a lot of changes and I doubt this will still work.
+
+# Kibana Percentile 
+Does what it says on the box.
+
+Place the panel folder with the rest of those in your Kibana installation, and add 'percentiles' to the 'panel_names' array in your config.js file.
+
 # Kibana
 
 __NOTE__: You have reached the Kibana 3 repository.
